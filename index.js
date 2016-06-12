@@ -33,12 +33,11 @@
  * (all spaces in the "" line should be ignored -- they're purely for formatting)
  *
  */
+'use strict';
 
 var url = require('url');
 //var path = require('path');
 var _ = require('lodash');
-
-'use strict';
 
 var defaults = {};
 
