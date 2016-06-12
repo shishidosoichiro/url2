@@ -50,7 +50,7 @@ var resolve = function(start){
 		a = a.split(slash);
 		b = b.split(slash);
 		var el;
-		while((el = b.shift()) != undefined) {
+		while((el = b.shift()) !== undefined) {
 			if (el === '..') a.pop();
 			else if (el === '.') continue;
 			else a.push(el);
@@ -66,7 +66,7 @@ var Url = function(urlObj, parseQueryString, slashesDenoteHost){
 
 	if (typeof urlObj === 'string') urlObj = url.parse(urlObj, parseQueryString, slashesDenoteHost);
 
-	if (typeof urlObj != 'object') throw new Error('a type of 1st argument should be string or object.');
+	if (typeof urlObj !== 'object') throw new Error('a type of 1st argument should be string or object.');
 
 	this._url = urlObj;
 };
