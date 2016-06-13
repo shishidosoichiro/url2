@@ -44,6 +44,20 @@ describe('Url', function(){
 		});
 	});
 
+	describe('#format', function(){
+		it('should return a string of href.', function(){
+			var url = Url('http://example.com/step/a');
+			url.format().should.equal('http://example.com/step/a');
+		});
+	});
+
+	describe('#toString', function(){
+		it('should return a string of href.', function(){
+			var url = Url('http://example.com/step/a');
+			url.toString().should.equal('http://example.com/step/a');
+		});
+	});
+
 	describe('#href', function(){
 		describe('#get', function(){
 			it('should return a string of href.', function(){

@@ -90,6 +90,9 @@ Url.prototype.cd = function(pathname){
 Url.prototype.format = function(){
 	return this._url.href;
 };
+Url.prototype.toString = function(){
+	return this._url.href;
+};
 Url.prototype._refresh = function(){
 	this._url = url.parse(url.format(this._url));
 };
