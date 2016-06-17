@@ -32,15 +32,17 @@ describe('Url', function(){
 		it('should return Url object which is resolved with a argument.', function(){
 			var stepA = Url('http://example.com/step/a');
 			var stepB = stepA.resolve('b');
+			stepA.href.should.equal('http://example.com/step/a');
 			stepB.href.should.equal('http://example.com/step/b');
 		});
 	});
 
 	describe('#cd', function(){
 		it('should change pathname like a path in file system.', function(){
-			var url = Url('http://example.com/a/b/c');
-			url.cd('d');
-			url.href.should.equal('http://example.com/a/b/c/d');
+			var urlA = Url('http://example.com/a/b/c');
+			urlB = urlA.cd('d/e');
+			urlA.href.should.equal('http://example.com/a/b/c');
+			urlB.href.should.equal('http://example.com/a/b/c/d/e');
 		});
 	});
 
