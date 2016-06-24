@@ -85,8 +85,7 @@ Url.prototype.resolve = function(next){
 Url.prototype.cd = function(pathname){
 	if (pathname === undefined) return Url(this.href);
 	var resolved = resolve(this._url.pathname, pathname);
-	this.pathname = resolved;
-	return this;
+	return this.resolve(resolved);
 };
 Url.prototype.format = function(){
 	return this._url.href;
