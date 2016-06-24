@@ -42,6 +42,16 @@ describe('Url', function(){
 			url.cd('d');
 			url.href.should.equal('http://example.com/a/b/c/d');
 		});
+		it('should return Url object that is added / to, If a param is \'\'.', function(){
+			var url = Url('http://example.com/a/b/c');
+			url.cd('');
+			url.href.should.equal('http://example.com/a/b/c/');
+		});
+		it('should return cloned Url object, If a param is nothing.', function(){
+			var url = Url('http://example.com/a/b/c');
+			url.cd();
+			url.href.should.equal('http://example.com/a/b/c');
+		});
 	});
 
 	describe('#format', function(){

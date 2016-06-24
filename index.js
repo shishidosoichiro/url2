@@ -83,6 +83,7 @@ Url.prototype.resolve = function(next){
 	return Url(resolved);
 };
 Url.prototype.cd = function(pathname){
+	if (pathname === undefined) return Url(this.href);
 	var resolved = resolve(this._url.pathname, pathname);
 	this.pathname = resolved;
 	return this;
