@@ -40,19 +40,21 @@ describe('Url', function(){
 	describe('#cd', function(){
 		it('should change pathname like a path in file system.', function(){
 			var urlA = Url('http://example.com/a/b/c');
-			urlB = urlA.cd('d/e');
+			var urlB = urlA.cd('d/e');
 			urlA.href.should.equal('http://example.com/a/b/c');
 			urlB.href.should.equal('http://example.com/a/b/c/d/e');
 		});
 		it('should return Url object that is added / to, If a param is \'\'.', function(){
-			var url = Url('http://example.com/a/b/c');
-			url.cd('');
-			url.href.should.equal('http://example.com/a/b/c/');
+			var urlA = Url('http://example.com/a/b/c');
+			var urlB = urlA.cd('');
+			urlA.href.should.equal('http://example.com/a/b/c');
+			urlB.href.should.equal('http://example.com/a/b/c/');
 		});
 		it('should return cloned Url object, If a param is nothing.', function(){
-			var url = Url('http://example.com/a/b/c');
-			url.cd();
-			url.href.should.equal('http://example.com/a/b/c');
+			var urlA = Url('http://example.com/a/b/c');
+			var urlB = urlA.cd();
+			urlA.href.should.equal('http://example.com/a/b/c');
+			urlB.href.should.equal('http://example.com/a/b/c');
 		});
 	});
 

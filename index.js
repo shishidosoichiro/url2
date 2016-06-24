@@ -48,6 +48,7 @@ var slash = '/';
 var resolve = function(start){
 	return slice(arguments, 1).reduce(function(a, b){
 		a = a.split(slash);
+		if (b === undefined || b === null) return a;
 		b = b.split(slash);
 		var el;
 		while((el = b.shift()) !== undefined) {
