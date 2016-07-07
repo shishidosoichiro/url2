@@ -62,6 +62,132 @@ var resolve = function(start){
 	}, start);
 };
 
+var properties = {
+	'href': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.href;
+		},
+		set: function(val) {
+			this.original = url.parse(val);
+		}
+	},
+	'protocol': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.protocol;
+		},
+		set: function(val) {
+			this.original.protocol = val;
+			this._refresh();
+		}
+	},
+	'host': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.host;
+		},
+		set: function(val) {
+			this.original.host = val;
+			this._refresh();
+		}
+	},
+	'auth': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.auth;
+		},
+		set: function(val) {
+			this.original.auth = val;
+			this._refresh();
+		}
+	},
+	'hostname': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.hostname;
+		},
+		set: function(val) {
+			this.original.hostname = val;
+			delete this.original.host;
+			this._refresh();
+		}
+	},
+	'port': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.port;
+		},
+		set: function(val) {
+			this.original.port = val;
+			delete this.original.host;
+			this._refresh();
+		}
+	},
+	'path': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.path;
+		},
+		set: function(val) {
+			if (!/^\//.test(val)) val = '/' + val;
+			this.href = url.resolve(this.original.href, val);
+		}
+	},
+	'pathname': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.pathname;
+		},
+		set: function(val) {
+			this.original.pathname = val;
+			this._refresh();
+		}
+	},
+	'search': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.search;
+		},
+		set: function(val) {
+			this.original.search = val;
+			this._refresh();
+		}
+	},
+	'query': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.query;
+		},
+		set: function(val) {
+			this.original.query = val;
+			delete this.original.search;
+			this._refresh();
+		}
+	},
+	'hash': {
+		configurable: true,
+		enumerable: true,
+		get: function() {
+			return this.original.hash;
+		},
+		set: function(val) {
+			this.original.hash = val;
+			this._refresh();
+		}
+	}
+};
+
 function Url2(urlObj, parseQueryString, slashesDenoteHost){
 	if (!(this instanceof Url2)) return new Url2(urlObj, parseQueryString, slashesDenoteHost);
 
@@ -69,136 +195,12 @@ function Url2(urlObj, parseQueryString, slashesDenoteHost){
 
 	if (typeof urlObj !== 'object') throw new Error('a type of 1st argument should be string or object.');
 
-	Object.defineProperties(this, {
-		"original": {
-			configurable: true,
-			enumerable: false,
-			writable: true,
-			value: urlObj
-		},
-		"href": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.href;
-			},
-			set: function(val) {
-				this.original = url.parse(val);
-			}
-		},
-		"protocol": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.protocol;
-			},
-			set: function(val) {
-				this.original.protocol = val;
-				this._refresh();
-			}
-		},
-		"host": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.host;
-			},
-			set: function(val) {
-				this.original.host = val;
-				this._refresh();
-			}
-		},
-		"auth": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.auth;
-			},
-			set: function(val) {
-				this.original.auth = val;
-				this._refresh();
-			}
-		},
-		"hostname": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.hostname;
-			},
-			set: function(val) {
-				this.original.hostname = val;
-				delete this.original.host;
-				this._refresh();
-			}
-		},
-		"port": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.port;
-			},
-			set: function(val) {
-				this.original.port = val;
-				delete this.original.host;
-				this._refresh();
-			}
-		},
-		"path": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.path;
-			},
-			set: function(val) {
-				if (!/^\//.test(val)) val = '/' + val;
-				this.href = url.resolve(this.original.href, val);
-			}
-		},
-		"pathname": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.pathname;
-			},
-			set: function(val) {
-				this.original.pathname = val;
-				this._refresh();
-			}
-		},
-		"search": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.search;
-			},
-			set: function(val) {
-				this.original.search = val;
-				this._refresh();
-			}
-		},
-		"query": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.query;
-			},
-			set: function(val) {
-				this.original.query = val;
-				delete this.original.search;
-				this._refresh();
-			}
-		},
-		"hash": {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.original.hash;
-			},
-			set: function(val) {
-				this.original.hash = val;
-				this._refresh();
-			}
-		}
+	Object.defineProperties(this, properties);
+	Object.defineProperty(this, 'original', {
+		configurable: true,
+		enumerable: false,
+		writable: true,
+		value: urlObj
 	});
 };
 
