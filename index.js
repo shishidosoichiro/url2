@@ -4,18 +4,18 @@
  *
  * ```js
  * // normal
- * var url = new Url('http://example.com/path/a/');
+ * var url = new Url2('http://example.com/path/a/');
  *
  * // function type
- * var url = Url('http://example.com/path/a/');
+ * var url = Url2('http://example.com/path/a/');
  *
  * // with url string
- * var url = Url('http://example.com/path/a/');
+ * var url = Url2('http://example.com/path/a/');
  *
  * // with url object
  * var nodeUrl = require('url');
  * var nodeUrlObj = nodeUrl.parse('http://example.com/path/a/');
- * var url = Url(nodeUrlObj);
+ * var url = Url2(nodeUrlObj);
  *
  * ```
  *
@@ -62,8 +62,8 @@ var resolve = function(start){
 	}, start);
 };
 
-var Url = function(urlObj, parseQueryString, slashesDenoteHost){
-	if (!(this instanceof Url)) return new Url(urlObj, parseQueryString, slashesDenoteHost);
+function Url2(urlObj, parseQueryString, slashesDenoteHost){
+	if (!(this instanceof Url2)) return new Url2(urlObj, parseQueryString, slashesDenoteHost);
 
 	if (typeof urlObj === 'string') urlObj = url.parse(urlObj, parseQueryString, slashesDenoteHost);
 
@@ -72,32 +72,32 @@ var Url = function(urlObj, parseQueryString, slashesDenoteHost){
 	this._url = urlObj;
 };
 
-Url.parse = function(urlString){
-	return Url(urlString);
+Url2.parse = function(urlString){
+	return Url2(urlString);
 };
-Url.format = function(urlObj){
+Url2.format = function(urlObj){
 	return url.format(urlObj);
 };
 
-Url.prototype.resolve = function(next){
+Url2.prototype.resolve = function(next){
 	var resolved = url.resolve(this._url.href, next);
-	return Url(resolved);
+	return Url2(resolved);
 };
-Url.prototype.cd = function(pathname){
-	if (pathname === undefined) return Url(this.href);
+Url2.prototype.cd = function(pathname){
+	if (pathname === undefined) return Url2(this.href);
 	var resolved = resolve(this._url.pathname, pathname);
 	return this.resolve(resolved);
 };
-Url.prototype.format = function(){
+Url2.prototype.format = function(){
 	return this._url.href;
 };
-Url.prototype.toString = function(){
+Url2.prototype.toString = function(){
 	return this._url.href;
 };
-Url.prototype._refresh = function(){
+Url2.prototype._refresh = function(){
 	this._url = url.parse(url.format(this._url));
 };
-Object.defineProperties(Url.prototype, {
+Object.defineProperties(Url2.prototype, {
 	"href": {
 		configurable: true,
 		enumerable: true,
@@ -223,4 +223,4 @@ Object.defineProperties(Url.prototype, {
 	}
 });
 
-module.exports = Url;
+module.exports = Url2;
