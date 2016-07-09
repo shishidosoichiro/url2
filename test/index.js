@@ -56,6 +56,12 @@ describe('Url2', function(){
 			urlA.href.should.equal('http://example.com/a/b/c');
 			urlB.href.should.equal('http://example.com/a/b/c');
 		});
+		it('should return Url2 object that is added querystring to, If a param is query object.', function(){
+			var urlA = Url2('http://example.com/a/b/c');
+			var urlB = urlA.cd({query: {key: 1234, word: 4321}});
+			urlA.href.should.equal('http://example.com/a/b/c');
+			urlB.href.should.equal('http://example.com/a/b/c?key=1234&word=4321');
+		});
 	});
 
 	describe('#format', function(){

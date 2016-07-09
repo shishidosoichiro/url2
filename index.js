@@ -196,12 +196,7 @@ function Url2(urlObj, parseQueryString, slashesDenoteHost){
 	if (typeof urlObj !== 'object') throw new Error('a type of 1st argument should be string or object.');
 
 	Object.defineProperties(this, properties);
-	Object.defineProperty(this, 'original', {
-		configurable: true,
-		enumerable: false,
-		writable: true,
-		value: urlObj
-	});
+	this.original = urlObj;
 };
 
 Url2.parse = function(urlString){
@@ -215,10 +210,12 @@ Url2.prototype.resolve = function(next){
 	var resolved = url.resolve(this.original.href, next);
 	return Url2(resolved);
 };
-Url2.prototype.cd = function(pathname){
-	if (pathname === undefined) return Url2(this.href);
-	var resolved = resolve(this.original.pathname, pathname);
-	return this.resolve(resolved);
+Url2.prototype.cd = function(path){
+	if (path === undefined) return Url2(this.href);
+	if (typeof path === 'object') path = Url2(Url2.format(path)).path;
+	if (/^\?/.test(path)) path = this.original.path + path;
+	else path = resolve(this.original.path, path);
+	return this.resolve(path);
 };
 Url2.prototype.format = function(){
 	return this.original.href;
